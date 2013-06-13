@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def index
   end
 
@@ -19,4 +20,20 @@ class UsersController < ApplicationController
 
   def new
   end
+  
+  def show
+  end
+
+  def login
+  end
+
+  def logout
+    session.clear
+    redirect_to root_path
+  end
+
+  def authenticate
+    authenticate_user(params) 
+  end
+
 end
