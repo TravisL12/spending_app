@@ -2,7 +2,7 @@
   %h1 Welcome to Spending USA!
   .error_alert
     - if flash[:errors_sign]
-      = render :partial => 'pages/login_signup_errors', :locals => { :errors => flash[:errors_sign] }
+      = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_sign] }
   .sign_up
     = form_for @user do |f|
       = f.label :first_name
@@ -27,7 +27,7 @@
   %br
   .error_alert
     - if flash[:errors_login]
-      = render :partial => 'pages/login_signup_errors', :locals => { :errors => flash[:errors_login] }
+      = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_login] }
   .login
     = form_tag login_path do
       = label_tag :username

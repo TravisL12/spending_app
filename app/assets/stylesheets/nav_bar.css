@@ -8,6 +8,7 @@
 }
 
 .logout form {
+	margin-right: 100px;
 	float: right;
 	display: inline;
 }

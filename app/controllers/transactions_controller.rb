@@ -1,9 +1,11 @@
 class TransactionsController < ApplicationController
+
   def index
-    @transactions = Transaction.all
+    @user = User.find_by_username(params[:username])
   end
 
   def show
+    @transactions = Transaction.find_by_user_id(params[:user_id])
   end
 
   def edit

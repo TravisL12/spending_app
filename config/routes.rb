@@ -7,6 +7,6 @@ SpendApp::Application.routes.draw do
   root :to => "pages#index"
   
   post  '/login'  => 'session#login'
-  post  '/logout' => 'session#logout'
+  get  '/logout' => 'session#logout'
   
 end

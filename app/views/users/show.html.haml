@@ -2,6 +2,14 @@
   Hello username:
 %p
   = @user.username
-
-  = form_tag logout_path, :method => :post do
+  = form_tag logout_path, :method => :get do
     = submit_tag "Logout"
+
+.profile_choices
+  %ul
+    %li
+      = link_to 'My Transactions', user_transaction_path(current_user)
+    %li
+      = link_to 'Update Transactions', "#"
+    %li
+      = link_to 'Import Transactions', "#"

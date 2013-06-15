@@ -1,0 +1,8 @@
+.header
+  - if current_user
+    Currently logged in as:
+    = link_to current_user.first_name, user_path(current_user)
+    .logout
+      = link_to 'Logout', logout_path
+  - else
+    Please login or sign-up!
