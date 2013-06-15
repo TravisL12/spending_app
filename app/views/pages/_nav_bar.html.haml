@@ -1,0 +1,9 @@
+.header
+  - if current_user
+    Currently logged in as username:
+    = current_user.username
+    .logout
+      = form_tag logout_path, :method => :post do
+        = submit_tag "Logout"
+  - else
+    Please login or sign-up!

@@ -4,11 +4,9 @@ SpendApp::Application.routes.draw do
     resources :transactions
   end
   
-  root :to => "users#index"
+  root :to => "pages#index"
   
-  get  '/user/login'  => 'users#login'
-  get  '/user/logout' => 'users#logout'
-  get  '/profile'     => 'users#show'
-  post '/user/login'  => 'users#authenticate'
-
+  post  '/login'  => 'session#login'
+  post  '/logout' => 'session#logout'
+  
 end

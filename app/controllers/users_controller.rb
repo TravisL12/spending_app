@@ -1,39 +1,19 @@
 class UsersController < ApplicationController
 
-  def index
-  end
-
-  def show
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
   def create
+    @user = User.new(params[:user])
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to user_path(@user.username)
+    else      
+      @user.errors.delete(:password_digest)
+      flash[:errors_sign] = @user.errors.full_messages
+      redirect_to root_path
+    end
   end
 
-  def new
-  end
-  
   def show
-  end
-
-  def login
-  end
-
-  def logout
-    session.clear
-    redirect_to root_path
-  end
-
-  def authenticate
-    authenticate_user(params) 
+    @user = User.find_by_username(params[:id])
   end
 
 end

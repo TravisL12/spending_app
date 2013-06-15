@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
+gem 'thin'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'haml'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -20,9 +20,23 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+group :development, :test do
+  gem 'faker'
+  gem 'sextant'
+  gem 'meta_request'
+  gem 'better_errors'
+  gem 'pry-rails'
+  gem 'quiet_assets'
+  gem 'haml-rails'
+  gem 'binding_of_caller'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'factory_girl_rails'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
+end
 
-gem 'sextant'
+gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

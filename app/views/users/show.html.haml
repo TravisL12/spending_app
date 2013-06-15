@@ -1,0 +1,7 @@
+%h1
+  Hello username:
+%p
+  = @user.username
+
+  = form_tag logout_path, :method => :post do
+    = submit_tag "Logout"
