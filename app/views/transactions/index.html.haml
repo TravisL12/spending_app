@@ -1,2 +1,24 @@
 .container
   %h1 All Transactions
+  
+  .transactions_all
+    %table
+      %tr
+        %td
+          Date
+        %td
+          Category
+        %td
+          Description
+        %td
+          Amount
+      - @transactions.each do |transaction|
+        %tr
+          %td
+            = transaction.date        
+          %td
+            = truncate(transaction.category)
+          %td
+            = truncate(transaction.description)
+          %td
+            = number_to_currency(transaction.amount, :unit => "$")

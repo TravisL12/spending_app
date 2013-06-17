@@ -1,0 +1,9 @@
+.transactions_all table tr:first-child {
+	font-weight: bold;
+	padding-bottom: 20px;
+	border-bottom: 1px solid black;
+}
+
+.transactions_all td {
+	padding-right: 20px;
+}

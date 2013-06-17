@@ -1,11 +1,11 @@
 class TransactionsController < ApplicationController
 
   def index
-    @user = User.find_by_username(params[:username])
+    @user = User.find(params[:user_id])
+    @transactions = @user.transactions.where(:date => Date.new(@year,@month,1)..Date.new(2009,1,1))
   end
 
   def show
-    @transactions = Transaction.find_by_user_id(params[:user_id])
   end
 
   def edit

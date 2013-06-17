@@ -8,7 +8,12 @@
 .profile_choices
   %ul
     %li
-      = link_to 'My Transactions', user_transaction_path(current_user)
+      My Transactions
+      / figure this shit out
+      = select 'month', @month, [["January", 1],["February",2],["March",3],["April",4],["May",5],["June",6],["July",7],["August",8],["September",9],["October",10],["November",11],["December",]]
+      = select 'year', @year, [["2003", 1],["2004", 2],["2005", 3],["2006", 4],["2007", 5],["2008", 6],["2009", 7],["2010", 8],["2011", 9],["2012", 10],["2013", 11]]
+      = form_tag user_transactions_path(current_user), :method => :get do
+        = submit_tag "Search Dates"
     %li
       = link_to 'Update Transactions', "#"
     %li
