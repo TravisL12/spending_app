@@ -1,5 +1,5 @@
-class Transaction < ActiveRecord::Base
+class Spenditure < Transaction
   attr_accessible :amount, :category, :date, :description, :location, :user_id
 
-  # belongs_to :user
+  belongs_to :user
 end

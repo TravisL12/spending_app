@@ -7,7 +7,12 @@ CSV.foreach("Workbook1.csv", :headers => true) do |row|
   new_date = Date.new(date[0].to_i, date[1].to_i, date[2].to_i)
   description = row["Description"]
   amount = row["Amount"].to_f
-  p Transaction.create(amount: amount, category: category, date: new_date, description: description, user_id: 1)
+  
+  p Spenditure.create(amount: amount,
+                      category: category,
+                      date: new_date,
+                      description: description,
+                      user_id: 1)
   
   # # New CSV download input
   # category = row["Master Category"]
