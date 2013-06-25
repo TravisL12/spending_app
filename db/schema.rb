@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130613055808) do
+ActiveRecord::Schema.define(:version => 20130625005049) do
 
   create_table "transactions", :force => true do |t|
     t.date     "date"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(:version => 20130613055808) do
     t.string   "location"
     t.decimal  "amount",      :precision => 8, :scale => 2
     t.integer  "user_id"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
+    t.boolean  "deposit",                                   :default => false
   end
 
   create_table "users", :force => true do |t|

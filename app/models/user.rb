@@ -8,6 +8,5 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :on => :create
 
   has_secure_password
-  has_many :spenditures
-  has_many :deposits
+  has_many :transactions
 end
