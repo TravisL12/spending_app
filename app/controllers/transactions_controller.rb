@@ -1,8 +1,10 @@
 class TransactionsController < ApplicationController
   
   include TransactionsHelper
+  include UsersHelper
+  
   def index
-    @user = User.find(params[:user_id])
+    @user = User.find_by_username(current_user.username)
 
     @start_year = params[:start_date][:year].to_i
     @start_month = params[:start_date][:month].to_i

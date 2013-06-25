@@ -16,9 +16,7 @@ module TransactionsHelper
     trans_sum = {}
     transaction.each do |category, transactions|
       trans_sum[category] = 0
-      transactions.each do |trans|
-        trans_sum[category] += trans.amount
-      end
+      transactions.each { |trans| trans_sum[category] += trans.amount }
     end
     trans_sum
   end

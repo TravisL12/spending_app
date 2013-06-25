@@ -1,5 +1,5 @@
 .container
-  %h3 Hello username: #{@user.username}
+  %h3 Hello username: #{current_user.username}
 
   .profile_choices
     %ul
@@ -13,4 +13,3 @@
           %li
             = select_date(Date.today, :prefix => :end_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
             = submit_tag "Search Dates"
-      
