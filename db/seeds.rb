@@ -8,10 +8,11 @@ CSV.foreach("Workbook1.csv", :headers => true) do |row|
   description = row["Description"]
   amount = row["Amount"].to_f
   
-  p Spenditure.create(amount: amount,
+  p Transaction.create(amount: amount,
                       category: category,
                       date: new_date,
                       description: description,
+                      deposit: false,
                       user_id: 1)
   
   # # New CSV download input

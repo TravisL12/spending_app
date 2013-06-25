@@ -1,8 +1,10 @@
 .header
   - if current_user
-    Currently logged in as:
-    = link_to current_user.first_name, user_path(current_user.username)
-    .logout
-      = link_to 'Logout', logout_path
+    %ul
+      %li Currently logged in as: #{link_to current_user.first_name, user_path(current_user)}
+      %li= link_to 'Update Transactions', "#"
+      %li= link_to 'Import Transactions', "#"
+      .logout
+        = link_to 'Logout', logout_path
   - else
     Please login or sign-up!

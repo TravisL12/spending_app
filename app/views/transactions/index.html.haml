@@ -1,6 +1,24 @@
 .container
   %h1 All Transactions
-  
+  %h5= link_to 'Search Again', user_path(current_user)
+  .transactions_all
+    %table
+      %tr
+        %td
+          Category
+        %td
+          Number of Transactions
+        %td
+          Sum of Transactions
+      - @transactions.each do |category, transaction|
+        %tr 
+          %td
+            = category
+          %td
+            = transaction.count
+          %td
+            = number_to_currency(@trans_total_amount[category], :unit => "$")
+  %br
   .transactions_all
     %table
       %tr
@@ -12,13 +30,14 @@
           Description
         %td
           Amount
-      - @transactions.each do |transaction|
-        %tr
-          %td
-            = transaction.date        
-          %td
-            = truncate(transaction.category)
-          %td
-            = truncate(transaction.description)
-          %td
-            = number_to_currency(transaction.amount, :unit => "$")
+      - @transactions.each do |category, transaction|
+        - transaction.each do |trans|
+          %tr 
+            %td
+              = category
+            %td
+              = trans.date
+            %td
+              = trans.description
+            %td
+              = trans.amount

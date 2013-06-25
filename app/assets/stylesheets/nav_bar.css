@@ -2,13 +2,30 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	padding: 20px;
+	padding-top: 10px;
 	width: 100%;
 	background: #ddd;
+}
+
+.header ul, .header li, .header a{
+  list-style: none;
+  text-decoration: none;
+  color: blue;
+  text-decoration: none;
+}
+
+.header a:hover{
+  color: black;
+  font-weight: bold;
 }
 
 .logout form {
 	margin-right: 100px;
 	float: right;
 	display: inline;
+  
+}
+
+.logout a {
+  text-decoration: none;
 }
