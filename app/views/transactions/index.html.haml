@@ -1,5 +1,8 @@
 .container
-  %h1 All Transactions
+  %h1 Transactions from: #{@start_date} to #{@end_date}
+  %h2 #{@days_between} days between 
+
+
   %h3= link_to 'Search Again', user_path(current_user.username)
   .transactions_all
     %table
@@ -7,42 +10,45 @@
         %td
           Category
         %td
-          Number of Transactions
+          Total Count
         %td
-          Sum of Transactions
+          Total Amount
         %td
-          Average Transaction Amount
-
+          Average Amount
       - @transactions.each do |category, transaction|
         %tr 
           %td
-            = category
+            = link_to category, user_category_path(@user, category)
           %td
-            = transaction.count
+            #col_organize
+              = transaction.count
           %td
-            = number_to_currency(@trans_total_amount[category], :unit => "$")
+            #col_organize
+              = number_to_currency(@trans_total_amount[category], :unit => "$")
           %td
-            = number_to_currency(@trans_total_amount[category]/transaction.count, :unit => "$") 
-  %br
-  .transactions_all
-    %table
-      %tr
-        %td
-          Date
-        %td
-          Category
-        %td
-          Description
-        %td
-          Amount
-      - @transactions.each do |category, transaction|
-        - transaction.each do |trans|
-          %tr 
-            %td
-              = trans.date.strftime('%m-%d-%y')
-            %td
-              = truncate(category)
-            %td
-              = truncate(trans.description)
-            %td
-              = number_to_currency(trans.amount, :unit => "$")
+            #col_organize
+              = number_to_currency(@trans_total_amount[category]/transaction.count, :unit => "$") 
+  / %br
+  / .transactions_all
+  /   %table
+  /     %tr
+  /       %td
+  /         Date
+  /       %td
+  /         Category
+  /       %td
+  /         Description
+  /       %td
+  /         Amount
+  /     - @transactions.each do |category, transaction|
+  /       - transaction.each do |trans|
+  /         %tr 
+  /           %td
+  /             = trans.date.strftime('%m-%d-%y')
+  /           %td
+  /             = truncate(category)
+  /           %td
+  /             = truncate(trans.description)
+  /           %td
+  /             #col_organize
+  /               = number_to_currency(trans.amount, :unit => "$")

@@ -1,6 +1,7 @@
 SpendApp::Application.routes.draw do
 
   resources :users do
+    resources :categories, :only => [:show]
     resources :transactions
   end
   
