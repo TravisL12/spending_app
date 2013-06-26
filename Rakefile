@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-SpendApp::Application.load_tasks
+SpreadsheetUsa::Application.load_tasks

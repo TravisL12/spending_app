@@ -1,31 +1,30 @@
 require 'csv'
 
-User.create(:first_name => 'Travis', :last_name => 'Lawrence', :username => 'travisl12', :email => 'travis.lawrence12@gmail.com', :password => 'travman')
+User.create(:first_name => 'Travis', 
+            :last_name => 'Lawrence', 
+            :username => 'travisl12', 
+            :email => 'travis.lawrence12@gmail.com', 
+            :password => 'travman',
+            :password_confirmation => 'travman')
 
 CSV.foreach("Workbook1.csv", :headers => true) do |row|
-  # Existing data CSV
   category = row["Category"]
   date = row["date"].split("-")
   new_date = Date.new(date[0].to_i, date[1].to_i, date[2].to_i)
   description = row["Description"]
   amount = row["Amount"].to_f
+   
+  if category.nil?
+    cat = Category.where(:name => 'Uncategorized Payments').first_or_create
+  else
+    cat = Category.where(:name => category).first_or_create
+  end
 
-  p Transaction.create(amount: amount,
-                      trans_category: category,
+  Transaction.create(amount: amount,
                       date: new_date,
                       description: description,
                       deposit: false,
-                      user_id: 1)
-end
+                      user_id: 1,
+                      category_id: cat.id)
 
-  # # New CSV download input
-  # category = row["Master Category"]
-  # date = row["Date"].split("/")
-  # new_date = Date.new(date[2].to_i, date[0].to_i, date[1].to_i)
-  # description = row["Description"]
-  # amount = row["Amount"].gsub(/[$]/,"").to_f
-  # Transaction.create(amount: amount, category: category, date: new_date, description: description)
-
-Transaction.all.each do |transaction|
-  Category.create(:name => transaction.trans_category)
 end

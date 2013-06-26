@@ -1,4 +1,4 @@
-SpendApp::Application.routes.draw do
+SpreadsheetUsa::Application.routes.draw do
 
   resources :users do
     resources :categories, :only => [:show]
