@@ -1,6 +1,6 @@
 class Transaction < ActiveRecord::Base
-  attr_accessible :amount, :category, :date, :description, :location, :user_id, :deposit
+  attr_accessible :amount, :trans_category, :date, :description, :location, :user_id, :deposit
 
   belongs_to :user
-  has_one :category
+  belongs_to :category
 end
