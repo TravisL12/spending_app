@@ -18,7 +18,7 @@
       - @transactions.each do |category, transaction|
         %tr 
           %td
-            = category #link_to category, user_category_path(@user, category)
+            = link_to category, user_category_path(@user, category)
           %td
             #col_organize
               = transaction.count
@@ -28,27 +28,27 @@
           %td
             #col_organize
               = number_to_currency(@trans_total_amount[category]/transaction.count, :unit => "$") 
-  %br
-  .transactions_all
-    %table
-      %tr
-        %td
-          Date
-        %td
-          Category
-        %td
-          Description
-        %td
-          Amount
-      - @transactions.each do |category, transaction|
-        - transaction.each do |trans|
-          %tr 
-            %td
-              = trans.date.strftime('%m-%d-%y')
-            %td
-              = truncate(category)
-            %td
-              = truncate(trans.description)
-            %td
-              #col_organize
-                = number_to_currency(trans.amount, :unit => "$")
+  / %br
+  / .transactions_all
+  /   %table
+  /     %tr
+  /       %td
+  /         Date
+  /       %td
+  /         Category
+  /       %td
+  /         Description
+  /       %td
+  /         Amount
+  /     - @transactions.each do |category, transaction|
+  /       - transaction.each do |trans|
+  /         %tr 
+  /           %td
+  /             = trans.date.strftime('%m-%d-%y')
+  /           %td
+  /             = truncate(category)
+  /           %td
+  /             = truncate(trans.description)
+  /           %td
+  /             #col_organize
+  /               = number_to_currency(trans.amount, :unit => "$")
