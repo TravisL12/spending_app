@@ -3,10 +3,10 @@ module TransactionsHelper
   def category_count(transactions)
     transaction_list = {}
     transactions.each do |transaction|
-      if transaction_list.has_key?(transaction.trans_category)
-        transaction_list[transaction.trans_category] << transaction
+      if transaction_list.has_key?(transaction.category_name)
+        transaction_list[transaction.category_name] << transaction
       else
-        transaction_list[transaction.trans_category] = [transaction]
+        transaction_list[transaction.category_name] = [transaction]
       end
     end
     transaction_list
@@ -31,7 +31,7 @@ module TransactionsHelper
     end_day = end_date[:day].to_i
 
     transactions = current_user.transactions.where(:date => Date.new(start_year, start_month, start_day)..Date.new(end_year, end_month, end_day))
-    transactions = category_count(transactions.sort_by! { |sort| sort.trans_category })
+    transactions = category_count(transactions.sort_by! { |sort| sort.category_name })
   end
 
   def days_between(begin_date, end_date)
