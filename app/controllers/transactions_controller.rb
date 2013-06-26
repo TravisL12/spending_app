@@ -12,6 +12,13 @@ class TransactionsController < ApplicationController
     @days_between = days_between(params[:start_date], params[:end_date])
     @transactions = transactions_between_dates(params[:start_date], params[:end_date])
     @trans_total_amount = category_sum(@transactions)
+
+    render :json => {:user => @user,
+                     :start_date => @start_date,
+                     :end_date => @end_date,
+                     :days_between => @days_between,
+                     :transactions => @transactions,
+                     :trans_total_amount => @trans_total_amount}
   end
 
   def show

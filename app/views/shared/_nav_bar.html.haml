@@ -1,0 +1,9 @@
+.header
+  - if current_user
+    %ul
+      %li Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
+      %li= link_to 'Update Transactions', "#"
+      .logout
+        = link_to 'Logout', logout_path
+  - else
+    Please login or sign-up!

@@ -1,0 +1,18 @@
+.container
+  %h3 Hello username: #{current_user.username}
+
+  .profile_choices
+    %ul
+      %li Select Date range of Transactions
+      %li
+        = form_tag user_transactions_path(current_user), :method => :get, :remote => true do
+          %li Beginning Date (Month, Year, Day):
+          %li
+            = select_date(Date.today, :prefix => :start_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
+          %li End Date (Month, Year, Day):
+          %li
+            = select_date(Date.today, :prefix => :end_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
+            = submit_tag "Search Dates"
+  
+.category_index
+  /= render :partial => 'transactions/category_summary'
