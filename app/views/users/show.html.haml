@@ -1,18 +1,22 @@
 .container
-  %h3 Hello username: #{current_user.username}
-
   .profile_choices
     %ul
-      %li Select Date range of Transactions
+      %li
+        %h3 Hello username: #{current_user.username}
       %li
         = form_tag user_transactions_path(current_user), :method => :get, :remote => true do
-          %li Beginning Date (Month, Year, Day):
+          %li Beginning Date:
           %li
-            = select_date(Date.today, :prefix => :start_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
-          %li End Date (Month, Year, Day):
+            = select_date(Date.new(Date.today.year, Date.today.month - 1, 1), :prefix => :start_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
+          %br
+          %li End Date:
           %li
-            = select_date(Date.today, :prefix => :end_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
-            = submit_tag "Search Dates"
+            = select_date(Date.new(Date.today.year, Date.today.month, 1), :prefix => :end_date, :start_year => 10.years.ago.year, :end_year => Date.today.year)
+            = submit_tag "Search Dates", :class => 'submit_search'
+          %br
+          %li
+            = image_tag 'ajaxSpinner.gif', :class => 'category_waiting'
   
-.category_index
-  /= render :partial => 'transactions/category_summary'
+  / JSON results here
+  .category_index
+  

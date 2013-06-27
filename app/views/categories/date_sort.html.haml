@@ -1,0 +1,22 @@
+.container
+  %h1 #{@category.name} Page!
+  %h3 Displaying #{@transactions.length} items from: #{@start_date} to #{@end_date}
+  %table
+    %tr
+      %td
+        #col_organize
+          Date:
+      %td
+        Description:
+      %td
+        #col_organize
+          Amount
+    - @transactions.each do |transaction|
+      %tr 
+        %td
+          = transaction.date.strftime('%m/%d/%Y')
+        %td
+          = truncate(transaction.description, :length => 90)
+        %td
+          #col_organize
+            = number_to_currency(transaction.amount, :unit => "$")

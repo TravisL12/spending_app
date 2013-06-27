@@ -9,7 +9,7 @@ module TransactionsHelper
         transaction_list[transaction.category_name] = [transaction]
       end
     end
-    transaction_list
+    transaction_list.sort_by { |cat| cat.first.name }
   end
   
   def category_sum(transaction)
@@ -31,7 +31,7 @@ module TransactionsHelper
     end_day = end_date[:day].to_i
 
     transactions = current_user.transactions.where(:date => Date.new(start_year, start_month, start_day)..Date.new(end_year, end_month, end_day))
-    transactions = category_count(transactions.sort_by! { |sort| sort.category_name })
+    transactions = category_count(transactions)
   end
 
   def days_between(begin_date, end_date)

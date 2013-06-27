@@ -9,5 +9,6 @@ SpreadsheetUsa::Application.routes.draw do
   
   post  '/login'  => 'session#login'
   get  '/logout' => 'session#logout'
+  get '/categories/date_sort' => 'categories#date_sort', :as => 'category_date'
   
 end
