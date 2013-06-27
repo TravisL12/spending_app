@@ -15,9 +15,9 @@ CSV.foreach("Workbook1.csv", :headers => true) do |row|
   amount = row["Amount"].to_f
    
   if category.nil?
-    cat = Category.where(:name => 'Uncategorized Payments').first_or_create
+    p cat = Category.where(:name => 'Uncategorized Payments').first_or_create
   else
-    cat = Category.where(:name => category).first_or_create
+    p cat = Category.where(:name => category).first_or_create
   end
 
   Transaction.create(amount: amount,

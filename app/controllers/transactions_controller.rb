@@ -5,12 +5,12 @@ class TransactionsController < ApplicationController
   
   def index
     @user = User.find_by_username(current_user.username)
-    
-    @start_date = Date.new(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i).strftime("%m-%d-%Y")
-    @end_date = Date.new(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i).strftime("%m-%d-%Y")
+    @start_date = Date.new(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
+    @end_date = Date.new(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)
 
-    @days_between = days_between(params[:start_date], params[:end_date])
-    @transactions = transactions_between_dates(params[:start_date], params[:end_date])
+    @days_between = (@end_date - @start_date).to_i
+
+    @transactions = transactions_between_dates(@start_date, @end_date)
     @trans_total_amount = category_sum(@transactions)
 
     @cat_page = render_to_string :partial => 'transactions/category_summary', :locals => 

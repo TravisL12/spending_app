@@ -14,5 +14,11 @@ class Transaction < ActiveRecord::Base
   def category_name
     Category.find(self.category_id)
   end
+  
+  def self.all_cached
+    Rails.cache.fetch('each_trans') do 
+      User.first.transactions
+    end
+  end
 
 end
