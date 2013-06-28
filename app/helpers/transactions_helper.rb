@@ -22,7 +22,7 @@ module TransactionsHelper
   end
   
   def transactions_between_dates(begin_date, end_date)
-    transactions = current_user.transactions.where(:date => begin_date..end_date).all_cached
+    transactions = current_user.transactions.where(:date => begin_date..end_date)#.all_cached
     transactions = category_count(transactions)
   end
 
