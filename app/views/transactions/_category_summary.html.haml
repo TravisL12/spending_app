@@ -15,7 +15,7 @@
     - transactions.each do |category, transaction|
       %tr 
         %td
-          = link_to category.name, category_date_path(:user => user, :category => category, :start_date => start_date, :end_date => end_date)
+          = link_to category.name, category_date_path(:user => user, :category => category, :start_date => start_date, :end_date => end_date), :remote => true, :class => 'category_name'
         %td
           #col_organize
             = transaction.count

@@ -9,6 +9,12 @@ class CategoriesController < ApplicationController
     @start_date = params[:start_date]
     @end_date = params[:end_date]
     @transactions = @category.transactions.where(:date => @start_date..@end_date)
+    
+    @cat_summary = render_to_string :partial => 'category_show', :locals => { :category => @category,
+                                                                              :start_date => @start_date,
+                                                                              :end_date => @end_date,
+                                                                              :transactions => @transactions }
+    
+    render :json => { :cat_summary => @cat_summary }
   end
-
 end

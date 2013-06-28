@@ -6,3 +6,31 @@
 .category_waiting {
   display: none;
 }
+
+.category_overview {
+  display: none;
+	position: absolute;
+	top: 180px;
+	min-height: 400px;
+  padding: 0px 0 30px 10px;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+	color: black;
+	background-color: rgba(200,200,200,0.85);
+	border-radius: 15px;
+}
+
+.close_box {
+	padding: 3px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	border: 1px black solid;
+}
+
+.close_box:hover {
+  border: 2px red solid;
+  background: #fff;
+  color: red;
+}
