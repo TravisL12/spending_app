@@ -2,7 +2,7 @@
   .profile_choices
     %ul
       %li
-        %h3 Hello username: #{current_user.username}
+        %h3 Select dates to see your spending
       %li
         = form_tag user_transactions_path(current_user), :method => :get, :remote => true do
           %li Beginning Date:

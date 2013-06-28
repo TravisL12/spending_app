@@ -17,7 +17,6 @@ $(document).ready(function(){
   });
   
   $('.category_overview').on('click', '.close_box', function(){
-    debugger;
     $('.category_overview').fadeOut('fast');
   });
 
