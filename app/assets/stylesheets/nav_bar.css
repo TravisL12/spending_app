@@ -1,5 +1,6 @@
 .header {
-	position: absolute;
+	font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  position: absolute;
 	top: 0;
 	left: 0;
   height: 90px;

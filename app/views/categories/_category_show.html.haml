@@ -1,25 +1,30 @@
-%h3 #{category.name} from: #{start_date} to #{end_date}
-%h3 Displaying #{transactions.length} items 
-.close_box
-  Close!
+.summary_box_header
+  %ul
+    %li
+      %h3 Category: #{category.name} (#{transactions.length} items)
+    %li #{start_date} - #{end_date}
+  .close_box
+    Close!
 
-%table
-  %tr
-    %td
-      #col_organize
-        Date:
-    %td
-      Description:
-    %td
-      #col_organize
-        Amount
-  - transactions.each do |transaction|
-    %tr 
+.summary_box_items
+  %table
+    %tr
       %td
         #col_organize
-          = transaction.date.strftime('%m/%d/%Y')
+          Date:
       %td
-        = truncate(transaction.description, :length => 90)
+        Description:
       %td
         #col_organize
-          = number_to_currency(transaction.amount, :unit => "$")
+          Amount
+    - transactions.each do |transaction|      
+      %tr.transaction_items
+        %td
+          #col_organize
+            = transaction.date.strftime('%m/%d/%Y')
+        %td
+          #descrip_organize
+            = truncate(transaction.description, :length => 85)
+        %td
+          #col_organize
+            = number_to_currency(transaction.amount, :unit => "$")
