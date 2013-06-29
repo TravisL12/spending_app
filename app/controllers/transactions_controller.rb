@@ -15,8 +15,8 @@ class TransactionsController < ApplicationController
 
     @cat_page = render_to_string :partial => 'transactions/category_summary', :locals => 
                                            {:user => @user,
-                                            :start_date => @start_date,
-                                            :end_date => @end_date,
+                                            :start_date => @start_date.to_date.strftime("%b, %d %Y"),
+                                            :end_date => @end_date.to_date.strftime("%b, %d %Y"),
                                             :days_between => @days_between,
                                             :transactions => @transactions,
                                             :trans_total_amount => @trans_total_amount}

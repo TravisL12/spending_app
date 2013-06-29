@@ -13,7 +13,7 @@ $(document).ready(function(){
   });
   
   $(document).on('ajax:success', 'a.category_name', function(e, data, success, xhr){
-    $('.category_overview').fadeIn('slow').html(data.cat_summary);
+    $('.category_overview').fadeIn('fast').html(data.cat_summary);
   });
   
   $('.category_overview').on('click', '.close_box', function(){

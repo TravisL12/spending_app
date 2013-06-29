@@ -6,17 +6,20 @@
   .close_box
     Close!
 
+  .summary_box_items_header
+    %table
+      %tr
+        %td
+          #summary_head_date
+            Date:
+        %td
+          #summary_head_desc
+            Description:
+        %td
+          Amount:
+
 .summary_box_items
   %table
-    %tr
-      %td
-        #col_organize
-          Date:
-      %td
-        Description:
-      %td
-        #col_organize
-          Amount
     - transactions.each do |transaction|      
       %tr.transaction_items
         %td
