@@ -24,6 +24,15 @@ class TransactionsController < ApplicationController
     render :json => { :category_page => @cat_page }
   end
 
+  def new
+    @transaction = Transaction.new
+  end
+  
+  def import
+    Transaction.import(params[:file], current_user)
+    redirect_to user_path(current_user.username)
+  end
+
   def show
   end
 
@@ -39,6 +48,4 @@ class TransactionsController < ApplicationController
   def create
   end
 
-  def new
-  end
 end

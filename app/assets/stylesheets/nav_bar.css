@@ -37,3 +37,8 @@
 .logout a {
   text-decoration: none;
 }
+
+#not_logged_in {
+ font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+ font-size: 18px;
+}
