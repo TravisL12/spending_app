@@ -25,19 +25,14 @@ class Transaction < ActiveRecord::Base
   #     User.first.transactions
   #   end
   # end
-  
-  def check_year(year)
-    year < 2011 ? (year += 2000) : year
-  end
 
   def self.import(file, user)
     CSV.foreach(file.path, :headers => true) do |row|
       category = row["Master Category"]
       location = row["Location"]
-
-      date = row["Date"].split("/")
-      new_date = Date.new(check_year(date[2].to_i), date[0].to_i, date[1].to_i)
       
+      date = Date.strptime(row["Date"],'%m/%d/%y')
+
       description = row["Description"]
       amount = row["Amount"].gsub(/[$]/,"").to_f
 
@@ -47,7 +42,7 @@ class Transaction < ActiveRecord::Base
         cat = Category.where(:name => category).first_or_create
       end
 
-      Transaction.create(date: new_date,
+      Transaction.create(date: date,
        amount: amount,
        location: location,
        category_id: cat.id,

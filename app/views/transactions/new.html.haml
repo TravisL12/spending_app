@@ -1,6 +1,6 @@
 .container
   %h1 Import Transactions
 
-  = form_tag import_user_transactions_path do
+  = form_tag import_user_transactions_path, multipart: true do
     = file_field_tag :file
     = submit_tag "Import"
