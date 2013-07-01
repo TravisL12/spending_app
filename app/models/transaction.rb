@@ -2,13 +2,13 @@ require 'csv'
 
 class Transaction < ActiveRecord::Base
   attr_accessible :amount,
-                  :category,
-                  :date,
-                  :description,
-                  :location,
-                  :user_id,
-                  :category_id,
-                  :deposit
+  :category,
+  :date,
+  :description,
+  :location,
+  :user_id,
+  :category_id,
+  :deposit
   
   validates :category_id, :uniqueness => { :scope => [:amount, :date] }
   validates :description, :uniqueness => true
@@ -25,16 +25,27 @@ class Transaction < ActiveRecord::Base
   #     User.first.transactions
   #   end
   # end
+  
+  def check_date(date_given)
+    if date_given.length < 10
+      Date.strptime(date,'%m/%d/%y')  
+    else
+      Date.strptime(date,'%m/%d/%Y')
+    end
+  end
 
   def self.import(file, user)
     CSV.foreach(file.path, :headers => true) do |row|
       category = row["Master Category"]
       location = row["Location"]
-      
-      date = Date.strptime(row["Date"],'%m/%d/%y')
-
       description = row["Description"]
       amount = row["Amount"].gsub(/[$]/,"").to_f
+
+      if row["Date"].length < 10
+        date = Date.strptime(row["Date"],'%m/%d/%y')  
+      else
+        date = Date.strptime(row["Date"],'%m/%d/%Y')
+      end      
 
       if category.nil?
         cat = Category.where(:name => 'Uncategorized Payments').first_or_create
