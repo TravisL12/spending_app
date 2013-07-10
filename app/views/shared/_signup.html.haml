@@ -1,0 +1,15 @@
+= form_for user do |f|
+  = f.label "Sign Up!"
+  = f.text_field :first_name, :placeholder => "First Name"
+  %br
+  = f.text_field :last_name, :placeholder => "Last Name"
+  %br
+  = f.text_field :username, :placeholder => "Username"
+  %br
+  = f.text_field :email, :placeholder => "E-mail"
+  %br
+  = f.password_field :password, :placeholder => "Password"
+  %br
+  = f.password_field :password_confirmation, :placeholder => "Password Confirm"
+  %br
+  = f.submit "Sign Up!"
