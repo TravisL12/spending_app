@@ -6,12 +6,18 @@ class User < ActiveRecord::Base
                   :password, 
                   :password_confirmation
 
-  validates :username, :uniqueness => true
-  validates :email,
-            :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
-                         :on => :create }
-  validates :password, :presence => true, :on => :create
-
-  has_secure_password
   has_many :transactions
+
+  def has_facebook?
+    accounts.where(provider: 'facebook').any?
+  end
+
+  def has_twitter?
+    accounts.where(provider: 'twitter').any?
+  end
+
+  def has_foursquare?
+    accounts.where(provider: 'foursquare').any?
+  end
+
 end

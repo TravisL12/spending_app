@@ -16,8 +16,9 @@
   .error_alert
     - if flash[:errors_sign]
       = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_sign] }
+  
   .sign_up
-    = form_for @user do |f|
+    = form_for @user, :url => (@user.new_record? ? users_path : user_path(@user))  do |f|
       = f.label :first_name
       = f.text_field :first_name
       %br
