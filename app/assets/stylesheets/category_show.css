@@ -23,9 +23,12 @@
 }
 
 #summary_head_desc {
-  padding-right: 515px;
+  min-width: 400px;
 }
 
+#summary_head_amount{
+
+}
 .summary_box_items{
   position: relative;
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -41,9 +44,9 @@
   top: 225px;
   height: 600px;
   padding: 0px 0 30px 10px;
-  width: 850px;
-  margin-left: 20%;
-  margin-right: 25%;
+  width: 70%;
+  margin-left: 10%;
+  margin-right: 20%;
   color: black;
   background-color: #ccc;
   border-radius: 15px;
