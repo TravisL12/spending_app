@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, 
-                  :first_name, 
-                  :last_name, 
-                  :username, 
-                  :password, 
+  attr_accessible :email,
+                  :first_name,
+                  :last_name,
+                  :username,
+                  :password,
                   :password_confirmation
 
   validates :username, :uniqueness => true
@@ -13,5 +13,6 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :on => :create
 
   has_secure_password
+  has_many :authentications
   has_many :transactions
 end
