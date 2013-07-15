@@ -12,7 +12,7 @@
 
 .header #not_logged_in{
   margin-left: 100px;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .header ul, .header li, .header a{
@@ -31,14 +31,9 @@
 	margin-right: 100px;
 	float: right;
 	display: inline;
-  
+
 }
 
 .logout a {
   text-decoration: none;
-}
-
-#not_logged_in {
- font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
- font-size: 18px;
 }

@@ -1,8 +1,5 @@
 class TransactionsController < ApplicationController
-  
-  include TransactionsHelper
-  include UsersHelper
-  
+
   def index
     @user = User.find_by_username(current_user.username)
     @start_date = Date.new(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
@@ -13,7 +10,7 @@ class TransactionsController < ApplicationController
     @transactions = transactions_between_dates(@start_date, @end_date)
     @trans_total_amount = category_sum(@transactions)
 
-    @cat_page = render_to_string :partial => 'transactions/category_summary', :locals => 
+    @cat_page = render_to_string :partial => 'transactions/category_summary', :locals =>
                                            {:user => @user,
                                             :start_date => @start_date.to_date.strftime("%b, %d %Y"),
                                             :end_date => @end_date.to_date.strftime("%b, %d %Y"),
@@ -27,7 +24,7 @@ class TransactionsController < ApplicationController
   def new
     @transaction = Transaction.new
   end
-  
+
   def import
     Transaction.import(params[:file], current_user)
     redirect_to user_path(current_user.username)
