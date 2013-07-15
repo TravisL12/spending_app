@@ -1,7 +1,13 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
+
 gem 'rails', '3.2.13'
 gem 'thin'
+
+gem 'haml-rails'
+gem 'roo'
+gem 'jquery-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -28,7 +34,6 @@ group :development, :test do
   gem 'better_errors'
   gem 'pry-rails'
   gem 'quiet_assets'
-  gem 'haml-rails'
   gem 'binding_of_caller'
   gem 'rspec-rails'
   gem 'capybara'
@@ -43,8 +48,6 @@ group :production do
   gem 'thin'
 end
 
-gem 'roo'
-gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
