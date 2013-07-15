@@ -39,6 +39,10 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
+group :production do
+  gem 'pg'
+end
+
 gem 'roo'
 gem 'jquery-rails'
 
