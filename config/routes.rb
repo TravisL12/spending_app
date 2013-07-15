@@ -6,10 +6,11 @@ SpreadsheetUsa::Application.routes.draw do
     	collection { post :import }
     end
   end
-    
+
   root :to => "pages#index"
-  post '/login'  => 'session#login'
-  get  '/logout' => 'session#logout'
+  post '/login'  => 'sessions#login'
+  get  '/logout' => 'sessions#logout'
   get  '/categories/date_sort' => 'categories#date_sort', :as => 'category_date'
-  
+  get '/auth/:provider/callback', :to => 'authentications#create'
+
 end

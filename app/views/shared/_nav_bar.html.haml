@@ -1,10 +1,14 @@
 .header
   - if current_user
     %ul
-      %li Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
+      / %li Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
       %li= link_to 'Import Transactions by CSV', new_user_transaction_path(current_user)
       .logout
         = link_to 'Logout', logout_path
   - else
     #not_logged_in
       Please login or sign-up!
+      %br
+      = link_to 'Login with Twitter', '/auth/twitter'
+      %br
+      = link_to 'Login with Facebook', '/auth/facebook'
