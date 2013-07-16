@@ -9,17 +9,17 @@ class Transaction < ActiveRecord::Base
   :user_id,
   :category_id,
   :deposit
-  
-  validates :category_id, :uniqueness => { :scope => [:amount, :date] }
+
+  validates :category_id, :uniqueness => { :scope => [:user_id, :amount, :date] }
   validates :description, :uniqueness => true
-  
+
   belongs_to :user
   belongs_to :category
 
   def category_name
     Category.find(self.category_id)
   end
-  
+
   # def self.all_cached
   #   Rails.cache.fetch('each_trans') do
   #     User.first.transactions
@@ -37,7 +37,7 @@ class Transaction < ActiveRecord::Base
         date = Date.strptime(row["Date"],'%m/%d/%y')
       else
         date = Date.strptime(row["Date"],'%m/%d/%Y')
-      end      
+      end
 
       if category.nil?
         cat = Category.where(:name => 'Uncategorized Payments').first_or_create
