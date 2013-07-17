@@ -9,5 +9,3 @@
   .error_alert
     - if flash[:errors_sign]
       = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_sign] }
-  .sign_up
-    = render :partial => 'shared/signup', :locals => { :user => @user }

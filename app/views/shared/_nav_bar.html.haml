@@ -1,5 +1,7 @@
 .header
   #not_logged_in
+    = link_to "Financial Overview!", root_path
+    %br
     - if current_user
       Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
       %br
@@ -8,6 +10,6 @@
       .logout
         = link_to 'Logout', logout_path
     - else
-      Please login or sign-up!
+      Please login or #{link_to "sign-up!", new_user_path}
       %br
       = link_to 'Login with Facebook', '/auth/facebook'
