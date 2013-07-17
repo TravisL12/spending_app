@@ -10,8 +10,8 @@ class Transaction < ActiveRecord::Base
   :category_id,
   :deposit
 
-  validates :category_id, :uniqueness => { :scope => [:user_id, :amount, :date] }
-  validates :description, :uniqueness => true
+  validates :user_id, :uniqueness => { :scope => [:category_id, :amount, :date] }
+  validates :description, :uniqueness => { :scope => :user_id }
 
   belongs_to :user
   belongs_to :category
