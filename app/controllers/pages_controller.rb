@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
 
-  def index
-    @user = User.new
+  def show
   end
 
 end

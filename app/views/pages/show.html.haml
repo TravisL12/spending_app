@@ -5,7 +5,3 @@
       = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_login] }
   .login
     = render :partial => 'shared/login'
-  %br
-  .error_alert
-    - if flash[:errors_sign]
-      = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_sign] }

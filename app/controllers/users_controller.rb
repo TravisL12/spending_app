@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def new
-    @user = User.new(params[:user])
+    @user = User.new
   end
 
   def create
@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update_attributes(params[:user])
+    session[:user_id] = @user.id
     redirect_to user_path(@user.username)
   end
 

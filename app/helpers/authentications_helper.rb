@@ -12,7 +12,7 @@ module AuthenticationsHelper
     username        = auth['info']['nickname']
     email           = auth['info']['email']
 
-    @user = User.create!(:first_name => first_name,
+    @user = User.create(:first_name => first_name,
       :last_name => last_name,
       :username => username,
       :email => email,

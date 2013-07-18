@@ -7,8 +7,7 @@ class User < ActiveRecord::Base
                   :password_confirmation
 
   validates :username, :uniqueness => true
-  validates :email,
-            :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+  validates :email, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
                          :on => :create }
   validates :password, :presence => true, :on => :create
 

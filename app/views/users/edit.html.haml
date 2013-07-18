@@ -1,5 +1,4 @@
 .container
   .sign_up
-    Edit User
-    %br
-    = render :partial => 'shared/signup', :locals => { :user => @user }
+    %p Edit User
+    = render 'shared/signup', :locals => { :user => @user }

@@ -7,11 +7,10 @@ SpreadsheetUsa::Application.routes.draw do
     end
   end
 
-  root :to => "pages#index"
   post '/login'  => 'sessions#login'
   get  '/logout' => 'sessions#logout'
   get  '/categories/date_sort' => 'categories#date_sort', :as => 'category_date'
-  get '/auth/:provider/callback', :to => 'authentications#create'
-  post '/users/new', :to => 'users#create'
-  post '/users/:id/edit', :to => 'users#update'
+  get  '/auth/:provider/callback', :to => 'authentications#create'
+
+  root :to => "pages#show"
 end
