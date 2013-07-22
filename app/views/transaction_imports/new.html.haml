@@ -1,0 +1,19 @@
+.container
+  %h1 Import Transactions
+
+  %p At the moment you need to have the following headers, exactly, in your CSV for the import to work correctly:
+  
+  %p Mandatory
+  %ul
+    %li Master Category
+    %li Date
+    %li Description
+    %li Amount
+
+  %p Optional 
+  %ul
+    %li Location
+
+  = form_tag user_transaction_imports_path, multipart: true do
+    = file_field_tag :file
+    = submit_tag "Import"

@@ -1,10 +1,10 @@
 class TransactionImportsController < ApplicationController
 
-def new
-end
+  def new
+    @transaction_import = TransactionImport.new
+  end
 
-def create
-end
-
+  def create
+  end
 
 end
