@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       data = {
         redirect_to: user_path(@user.username)
       }
-      render json:data, status: :unprocessable_entity
+      render json:data
     else
       @user.errors.delete(:password_digest)
       data = {
