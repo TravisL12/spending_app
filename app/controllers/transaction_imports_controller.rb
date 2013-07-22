@@ -5,6 +5,13 @@ class TransactionImportsController < ApplicationController
   end
 
   def create
+    @transaction_import = TransactionImport.new(params[:transaction_import], current_user)
+
+    if @transaction_import.save
+      redirect_to user_path(current_user.username)
+    else
+      render :new
+    end
   end
 
 end
