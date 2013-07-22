@@ -9,6 +9,9 @@ class TransactionImport
   def initialize(attributes = {})
     attributes.each { |name, value| send("#{name}=", value) }
   end
-
   
+  def persisted?
+    false
+  end
+
 end
