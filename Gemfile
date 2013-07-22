@@ -13,7 +13,7 @@ gem 'jquery-rails'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-
+gem 'simple_form'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'

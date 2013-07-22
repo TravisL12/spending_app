@@ -8,11 +8,16 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_path(@user.username)
+      data = {
+        redirect_to: user_path(@user.username)
+      }
+      render json:data, status: :unprocessable_entity
     else
       @user.errors.delete(:password_digest)
-      flash[:errors_sign] = @user.errors.full_messages
-      redirect_to root_path
+      data = {
+        html: view_context.render('shared/signup', user: @user)
+      }
+      render json:data, status: :unprocessable_entity
     end
   end
 

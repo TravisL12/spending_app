@@ -2,6 +2,9 @@
   %h1 Welcome to Financial Overview!
   .error_alert
     - if flash[:errors_login]
-      = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_login] }
+      = render 'shared/login_signup_errors', :errors => flash[:errors_login]
   .login
-    = render :partial => 'shared/login'
+    = render 'shared/login'
+  .error_alert
+    - if flash[:errors_sign]
+      = render 'shared/login_signup_errors', :errors => flash[:errors_sign]

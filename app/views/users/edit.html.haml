@@ -1,4 +1,4 @@
 .container
   .sign_up
     %p Edit User
-    = render 'shared/signup', :locals => { :user => @user }
+    = render 'shared/signup', :remote => true, :locals => { :user => @user }

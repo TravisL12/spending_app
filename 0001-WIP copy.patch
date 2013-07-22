@@ -1,0 +1,435 @@
+From 4f2a28997af0c41819956d8c6a7592a85d112ded Mon Sep 17 00:00:00 2001
+From: Jared Grippe <jared@deadlyicon.com>
+Date: Wed, 17 Jul 2013 16:03:00 -0700
+Subject: [PATCH] WIP
+
+---
+ Gemfile                                     |   3 +-
+ Gemfile.lock                                |   4 +
+ app/assets/javascripts/application.js       |  13 ++-
+ app/controllers/users_controller.rb         |  15 ++-
+ app/views/pages/index.html.haml             |   8 +-
+ app/views/shared/_signup.html.haml          |  26 +++--
+ codereview.patch                            |   0
+ config/initializers/simple_form.rb          | 142 ++++++++++++++++++++++++++++
+ config/locales/simple_form.en.yml           |  26 +++++
+ config/routes.rb                            |   3 +-
+ db/schema.rb                                |   3 +-
+ db/seeds.rb                                 |  12 +--
+ lib/templates/haml/scaffold/_form.html.haml |  10 ++
+ 13 files changed, 231 insertions(+), 34 deletions(-)
+ create mode 100644 codereview.patch
+ create mode 100644 config/initializers/simple_form.rb
+ create mode 100644 config/locales/simple_form.en.yml
+ create mode 100644 lib/templates/haml/scaffold/_form.html.haml
+
+diff --git a/Gemfile b/Gemfile
+index ce6f208..aaef37c 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -1,6 +1,6 @@
+ source 'https://rubygems.org'
+ 
+-ruby '1.9.3'
++# ruby '1.9.3'
+ 
+ gem 'rails', '3.2.13'
+ gem 'thin'
+@@ -9,6 +9,7 @@ gem 'haml-rails'
+ gem 'roo'
+ gem 'jquery-rails'
+ 
++gem 'simple_form'
+ # Bundle edge Rails instead:
+ # gem 'rails', :git => 'git://github.com/rails/rails.git'
+ 
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 2118dd6..f9498c5 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -185,6 +185,9 @@ GEM
+       websocket (~> 1.0.4)
+     sextant (0.2.4)
+       rails (>= 3.2)
++    simple_form (2.0.4)
++      actionpack (~> 3.0)
++      activemodel (~> 3.0)
+     slop (3.4.5)
+     spreadsheet (0.8.5)
+       ruby-ole (>= 1.0)
+@@ -236,5 +239,6 @@ DEPENDENCIES
+   rspec-rails
+   selenium-webdriver
+   sextant
++  simple_form
+   thin
+   uglifier (>= 1.0.3)
+diff --git a/app/assets/javascripts/application.js b/app/assets/javascripts/application.js
+index 674a433..3e5b217 100644
+--- a/app/assets/javascripts/application.js
++++ b/app/assets/javascripts/application.js
+@@ -12,4 +12,15 @@
+ //
+ //= require jquery
+ //= require jquery_ujs
+-//= require_tree .
+\ No newline at end of file
++//= require_tree .
++
++
++
++$(document).on('ajax:complete', '#new_user', function(event, xhr, status){
++  var response = xhr.responseJSON
++  if (status === "error"){
++    $(this).replaceWith(response.html);
++  }else{
++    location.replace(response.redirect_to);
++  }
++})
+diff --git a/app/controllers/users_controller.rb b/app/controllers/users_controller.rb
+index 1598b6a..01abdde 100644
+--- a/app/controllers/users_controller.rb
++++ b/app/controllers/users_controller.rb
+@@ -4,11 +4,18 @@ class UsersController < ApplicationController
+     @user = User.new(params[:user])
+     if @user.save
+       session[:user_id] = @user.id
+-      redirect_to user_path(@user.username)
+-    else      
++      debugger;
++      data = {
++        redirect_to: user_path(@user.username)
++      }
++      render json:data, status: :unprocessable_entity
++    else
+       @user.errors.delete(:password_digest)
+-      flash[:errors_sign] = @user.errors.full_messages
+-      redirect_to root_path
++      # flash[:errors_sign] = @user.errors.full_messages
++      data = {
++        html: view_context.render('shared/signup', user: @user)
++      }
++      render json:data, status: :unprocessable_entity
+     end
+   end
+ 
+diff --git a/app/views/pages/index.html.haml b/app/views/pages/index.html.haml
+index 8ec1a13..cae6abf 100644
+--- a/app/views/pages/index.html.haml
++++ b/app/views/pages/index.html.haml
+@@ -2,12 +2,12 @@
+   %h1 Welcome to Financial Overview!
+   .error_alert
+     - if flash[:errors_login]
+-      = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_login] }
++      = render 'shared/login_signup_errors', :errors => flash[:errors_login]
+   .login
+-    = render :partial => 'shared/login'
++    = render 'shared/login'
+   %br
+   .error_alert
+     - if flash[:errors_sign]
+-      = render :partial => 'shared/login_signup_errors', :locals => { :errors => flash[:errors_sign] }
++      = render 'shared/login_signup_errors', :errors => flash[:errors_sign]
+   .sign_up
+-    = render :partial => 'shared/signup', :locals => { :user => @user }
++    = render 'shared/signup', :user => @user
+diff --git a/app/views/shared/_signup.html.haml b/app/views/shared/_signup.html.haml
+index 0e7661e..c02edae 100644
+--- a/app/views/shared/_signup.html.haml
++++ b/app/views/shared/_signup.html.haml
+@@ -1,15 +1,11 @@
+-= form_for user do |f|
+-  = f.label "Sign Up!"
+-  = f.text_field :first_name, :placeholder => "First Name"
+-  %br
+-  = f.text_field :last_name, :placeholder => "Last Name"
+-  %br
+-  = f.text_field :username, :placeholder => "Username"
+-  %br
+-  = f.text_field :email, :placeholder => "E-mail"
+-  %br
+-  = f.password_field :password, :placeholder => "Password"
+-  %br
+-  = f.password_field :password_confirmation, :placeholder => "Password Confirm"
+-  %br
+-  = f.submit "Sign Up!"
+\ No newline at end of file
++= simple_form_for user, remote: true do |f|
++  %h2 Sign Up!
++  = f.input :first_name,            :label => false, :placeholder => "First Name"
++  = f.input :last_name,             :label => false, :placeholder => "Last Name"
++  = f.input :username,              :label => false, :placeholder => "Username"
++  = f.input :email,                 :label => false, :placeholder => "E-mail"
++  = f.input :password,              :label => false, :placeholder => "Password"
++  = f.input :password_confirmation, :label => false, :placeholder => "Password Confirm"
++
++  %div
++    = f.submit "Sign Up!"
+diff --git a/codereview.patch b/codereview.patch
+new file mode 100644
+index 0000000..e69de29
+diff --git a/config/initializers/simple_form.rb b/config/initializers/simple_form.rb
+new file mode 100644
+index 0000000..e3f8d09
+--- /dev/null
++++ b/config/initializers/simple_form.rb
+@@ -0,0 +1,142 @@
++# Use this setup block to configure all options available in SimpleForm.
++SimpleForm.setup do |config|
++  # Wrappers are used by the form builder to generate a
++  # complete input. You can remove any component from the
++  # wrapper, change the order or even add your own to the
++  # stack. The options given below are used to wrap the
++  # whole input.
++  config.wrappers :default, :class => :input,
++    :hint_class => :field_with_hint, :error_class => :field_with_errors do |b|
++    ## Extensions enabled by default
++    # Any of these extensions can be disabled for a
++    # given input by passing: `f.input EXTENSION_NAME => false`.
++    # You can make any of these extensions optional by
++    # renaming `b.use` to `b.optional`.
++
++    # Determines whether to use HTML5 (:email, :url, ...)
++    # and required attributes
++    b.use :html5
++
++    # Calculates placeholders automatically from I18n
++    # You can also pass a string as f.input :placeholder => "Placeholder"
++    b.use :placeholder
++
++    ## Optional extensions
++    # They are disabled unless you pass `f.input EXTENSION_NAME => :lookup`
++    # to the input. If so, they will retrieve the values from the model
++    # if any exists. If you want to enable the lookup for any of those
++    # extensions by default, you can change `b.optional` to `b.use`.
++
++    # Calculates maxlength from length validations for string inputs
++    b.optional :maxlength
++
++    # Calculates pattern from format validations for string inputs
++    b.optional :pattern
++
++    # Calculates min and max from length validations for numeric inputs
++    b.optional :min_max
++
++    # Calculates readonly automatically from readonly attributes
++    b.optional :readonly
++
++    ## Inputs
++    b.use :label_input
++    b.use :hint,  :wrap_with => { :tag => :span, :class => :hint }
++    b.use :error, :wrap_with => { :tag => :span, :class => :error }
++  end
++
++  # The default wrapper to be used by the FormBuilder.
++  config.default_wrapper = :default
++
++  # Define the way to render check boxes / radio buttons with labels.
++  # Defaults to :nested for bootstrap config.
++  #   :inline => input + label
++  #   :nested => label > input
++  config.boolean_style = :nested
++
++  # Default class for buttons
++  config.button_class = 'btn'
++
++  # Method used to tidy up errors. Specify any Rails Array method.
++  # :first lists the first message for each field.
++  # Use :to_sentence to list all errors for each field.
++  # config.error_method = :first
++
++  # Default tag used for error notification helper.
++  config.error_notification_tag = :div
++
++  # CSS class to add for error notification helper.
++  config.error_notification_class = 'alert alert-error'
++
++  # ID to add for error notification helper.
++  # config.error_notification_id = nil
++
++  # Series of attempts to detect a default label method for collection.
++  # config.collection_label_methods = [ :to_label, :name, :title, :to_s ]
++
++  # Series of attempts to detect a default value method for collection.
++  # config.collection_value_methods = [ :id, :to_s ]
++
++  # You can wrap a collection of radio/check boxes in a pre-defined tag, defaulting to none.
++  # config.collection_wrapper_tag = nil
++
++  # You can define the class to use on all collection wrappers. Defaulting to none.
++  # config.collection_wrapper_class = nil
++
++  # You can wrap each item in a collection of radio/check boxes with a tag,
++  # defaulting to :span. Please note that when using :boolean_style = :nested,
++  # SimpleForm will force this option to be a label.
++  # config.item_wrapper_tag = :span
++
++  # You can define a class to use in all item wrappers. Defaulting to none.
++  # config.item_wrapper_class = nil
++
++  # How the label text should be generated altogether with the required text.
++  # config.label_text = lambda { |label, required| "#{required} #{label}" }
++
++  # You can define the class to use on all labels. Default is nil.
++  config.label_class = 'control-label'
++
++  # You can define the class to use on all forms. Default is simple_form.
++  # config.form_class = :simple_form
++
++  # You can define which elements should obtain additional classes
++  # config.generate_additional_classes_for = [:wrapper, :label, :input]
++
++  # Whether attributes are required by default (or not). Default is true.
++  # config.required_by_default = true
++
++  # Tell browsers whether to use default HTML5 validations (novalidate option).
++  # Default is enabled.
++  config.browser_validations = false
++
++  # Collection of methods to detect if a file type was given.
++  # config.file_methods = [ :mounted_as, :file?, :public_filename ]
++
++  # Custom mappings for input types. This should be a hash containing a regexp
++  # to match as key, and the input type that will be used when the field name
++  # matches the regexp as value.
++  # config.input_mappings = { /count/ => :integer }
++
++  # Custom wrappers for input types. This should be a hash containing an input
++  # type as key and the wrapper that will be used for all inputs with specified type.
++  # config.wrapper_mappings = { :string => :prepend }
++
++  # Default priority for time_zone inputs.
++  # config.time_zone_priority = nil
++
++  # Default priority for country inputs.
++  # config.country_priority = nil
++
++  # Default size for text inputs.
++  # config.default_input_size = 50
++
++  # When false, do not use translations for labels.
++  # config.translate_labels = true
++
++  # Automatically discover new inputs in Rails' autoload path.
++  # config.inputs_discovery = true
++
++  # Cache SimpleForm inputs discovery
++  # config.cache_discovery = !Rails.env.development?
++end
+diff --git a/config/locales/simple_form.en.yml b/config/locales/simple_form.en.yml
+new file mode 100644
+index 0000000..0df11fe
+--- /dev/null
++++ b/config/locales/simple_form.en.yml
+@@ -0,0 +1,26 @@
++en:
++  simple_form:
++    "yes": 'Yes'
++    "no": 'No'
++    required:
++      text: 'required'
++      mark: '*'
++      # You can uncomment the line below if you need to overwrite the whole required html.
++      # When using html, text and mark won't be used.
++      # html: '<abbr title="required">*</abbr>'
++    error_notification:
++      default_message: "Please review the problems below:"
++    # Labels and hints examples
++    # labels:
++    #   defaults:
++    #     password: 'Password'
++    #   user:
++    #     new:
++    #       email: 'E-mail to sign in.'
++    #     edit:
++    #       email: 'E-mail.'
++    # hints:
++    #   defaults:
++    #     username: 'User name to sign in.'
++    #     password: 'No special characters, please.'
++
+diff --git a/config/routes.rb b/config/routes.rb
+index 5196817..3420d8f 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -7,10 +7,11 @@ SpreadsheetUsa::Application.routes.draw do
+     end
+   end
+ 
+-  root :to => "pages#index"
+   post '/login'  => 'sessions#login'
+   get  '/logout' => 'sessions#logout'
+   get  '/categories/date_sort' => 'categories#date_sort', :as => 'category_date'
+   get '/auth/:provider/callback', :to => 'authentications#create'
+ 
++  root :to => "pages#index"
++
+ end
+diff --git a/db/schema.rb b/db/schema.rb
+index caab8c1..c75b293 100644
+--- a/db/schema.rb
++++ b/db/schema.rb
+@@ -11,8 +11,7 @@
+ #
+ # It's strongly recommended to check this file into your version control system.
+ 
+-
+-ActiveRecord::Schema.define(:version => 20130713203003) do
++ActiveRecord::Schema.define(:version => 20130715191523) do
+ 
+   create_table "authentications", :force => true do |t|
+     t.integer  "user_id"
+diff --git a/db/seeds.rb b/db/seeds.rb
+index dd7866f..32ec005 100644
+--- a/db/seeds.rb
++++ b/db/seeds.rb
+@@ -1,9 +1,9 @@
+ require 'csv'
+ 
+-User.create(:first_name => 'Travis', 
+-            :last_name => 'Lawrence', 
+-            :username => 'travisl12', 
+-            :email => 'travis.lawrence12@gmail.com', 
++User.create(:first_name => 'Travis',
++            :last_name => 'Lawrence',
++            :username => 'travisl12',
++            :email => 'travis.lawrence12@gmail.com',
+             :password => 'travman',
+             :password_confirmation => 'travman')
+ 
+@@ -13,7 +13,7 @@ CSV.foreach("Workbook1.csv", :headers => true) do |row|
+   new_date = Date.new(date[0].to_i, date[1].to_i, date[2].to_i)
+   description = row["Description"]
+   amount = row["Amount"].to_f
+-   
++
+   if category.nil?
+     p cat = Category.where(:name => 'Uncategorized Payments').first_or_create
+   else
+@@ -27,4 +27,4 @@ CSV.foreach("Workbook1.csv", :headers => true) do |row|
+                       user_id: 1,
+                       category_id: cat.id)
+ 
+-end
+\ No newline at end of file
++end
+diff --git a/lib/templates/haml/scaffold/_form.html.haml b/lib/templates/haml/scaffold/_form.html.haml
+new file mode 100644
+index 0000000..ac3aa7b
+--- /dev/null
++++ b/lib/templates/haml/scaffold/_form.html.haml
+@@ -0,0 +1,10 @@
++= simple_form_for(@<%= singular_table_name %>) do |f|
++  = f.error_notification
++
++  .form-inputs
++  <%- attributes.each do |attribute| -%>
++    = f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
++  <%- end -%>
++
++  .form-actions
++    = f.button :submit
+-- 
+1.8.3.1
+
