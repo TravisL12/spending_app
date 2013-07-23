@@ -46,7 +46,9 @@ class TransactionImport
       description = row["Description"]
       amount = row["Amount"].gsub(/[$]/,"").to_f unless row["Amount"].class == Float
       
-      if row["Date"].length < 10
+      if row["Date"].class == Date
+        date = row["Date"]
+      elsif row["Date"].length < 10
         date = Date.strptime(row["Date"],'%m/%d/%y')
       else
         date = Date.strptime(row["Date"],'%m/%d/%Y')
