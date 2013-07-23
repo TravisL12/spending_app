@@ -15,5 +15,12 @@
     %li Location
 
   = form_for [current_user, @transaction_import], multipart: true do |f|
+    - if @transaction_import.errors.any?
+      #import_errors
+        %h2= "#{pluralize(@transaction_import.errors.count, 'error')} prohibited this import from completing:" 
+        %ul
+          - @transaction_import.errors.full_messages.each do |message|
+            %li= message
+
     = f.file_field :file
     = f.submit "Import"

@@ -8,6 +8,7 @@ class TransactionImportsController < ApplicationController
     @transaction_import = TransactionImport.new(params[:transaction_import], current_user)
 
     if @transaction_import.save
+      flash[:notice] = 'Transactions Imported Successfully'
       redirect_to user_path(current_user.username)
     else
       render :new
