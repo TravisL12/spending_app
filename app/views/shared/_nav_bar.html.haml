@@ -5,7 +5,7 @@
     - if current_user
       Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
       %br
-      = link_to 'Import Transactions by CSV', new_user_transaction_path(current_user)
+      = link_to 'Import Transactions by CSV', new_user_transaction_import_path(current_user)
       %br
       .logout
         = link_to 'Logout', logout_path
