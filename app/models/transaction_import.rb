@@ -12,7 +12,7 @@ class TransactionImport
     attributes.each { |name, value| send("#{name}=", value) }
     @user = User.find(user.id) if user != nil
   end
-  
+
   def persisted?
     false
   end
@@ -30,7 +30,7 @@ class TransactionImport
       false
     end
   end
-  
+
   def imported_transactions
     @imported_transactions ||= load_imported_transactions
   end
@@ -45,7 +45,7 @@ class TransactionImport
       location = row["Location"]
       description = row["Description"]
       amount = row["Amount"].gsub(/[$]/,"").to_f unless row["Amount"].class == Float
-      
+
       if row["Date"].class == Date
         date = row["Date"]
       elsif row["Date"].length < 10
@@ -62,20 +62,20 @@ class TransactionImport
 
       transaction = Transaction.where("user_id = ? AND category_id = ? AND amount = ? AND date = ?",
         @user.id, cat.id, amount, date).first || Transaction.new(date: date, amount: amount, location: location,
-                                                   category_id: cat.id, user_id: @user.id, description: description)
+        category_id: cat.id, user_id: @user.id, description: description)
 
-      transaction
+        transaction
+      end
     end
-  end
 
 
-  def open_spreadsheet
-    case File.extname(file.original_filename)
-    when ".csv" then Roo::Csv.new(file.path, nil, :ignore)
-    when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
-    when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
-    else raise "Unknown file type: #{file.original_filename}. Please import '.csv', '.xls', or '.xlsx' file types only."
+    def open_spreadsheet
+      case File.extname(file.original_filename)
+      when ".csv" then Roo::Csv.new(file.path, nil, :ignore)
+      when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
+      when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
+      else raise "Unknown file type: #{file.original_filename}. Please import '.csv', '.xls', or '.xlsx' file types only."
+      end
     end
-  end
 
-end
+  end
