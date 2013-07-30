@@ -5,8 +5,6 @@ SpreadsheetUsa::Application.routes.draw do
     resources :transactions do
     	collection { post :import }
     end
-
-    resources :transaction_imports, only: [:new, :create]
   end
 
   post '/login'  => 'sessions#login'

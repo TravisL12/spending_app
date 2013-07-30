@@ -25,10 +25,10 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
   end
 
-  # def import
-  #   Transaction.import(params[:file], current_user)
-  #   redirect_to user_path(current_user.username)
-  # end
+  def import
+    Transaction.import(params[:file], current_user)
+    redirect_to user_path(current_user.username)
+  end
 
   def show
   end

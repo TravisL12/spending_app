@@ -63,7 +63,6 @@ class TransactionImport
       transaction = Transaction.where("user_id = ? AND category_id = ? AND amount = ? AND date = ?",
         @user.id, cat.id, amount, date).first || Transaction.new(date: date, amount: amount, location: location,
         category_id: cat.id, user_id: @user.id, description: description)
-
         transaction
       end
     end
