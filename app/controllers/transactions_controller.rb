@@ -1,9 +1,9 @@
 class TransactionsController < ApplicationController
 
   def index
-    @user = User.find_by_username(current_user.username)
+    @user       = User.find_by_username(current_user.username)
     @start_date = Date.new(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
-    @end_date = Date.new(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)
+    @end_date   = Date.new(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)
 
     @days_between = (@end_date - @start_date).to_i
 
@@ -28,21 +28,6 @@ class TransactionsController < ApplicationController
   def import
     Transaction.import(params[:file], current_user)
     redirect_to user_path(current_user.username)
-  end
-
-  def show
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
-  def create
   end
 
 end

@@ -1,18 +1,17 @@
-
 development:
   adapter: postgresql
   encoding: unicode
-  database: spreadsheet_usa_dev
+  database: finance_overview_dev
   pool: 5
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: spreadsheet_usa_test
+  database: finance_overview_test
   pool: 5
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: spreadsheet_usa
+  database: finance_overview
   pool: 5

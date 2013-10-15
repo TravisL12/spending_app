@@ -20,12 +20,6 @@ class Transaction < ActiveRecord::Base
     Category.find(self.category_id)
   end
 
-  # def self.all_cached
-  #   Rails.cache.fetch('each_trans') do
-  #     User.first.transactions
-  #   end
-  # end
-
   def self.import(file, user)
     CSV.foreach(file.path, :headers => true) do |row|
       category = row["Master Category"]
