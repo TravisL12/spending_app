@@ -1,12 +1,9 @@
 module TransactionsHelper
 
-  def category_sum(transaction)
-    trans_sum = {}
-    transaction.each do |category, transactions|
-      trans_sum[category] = 0
-      transactions.each { |trans| trans_sum[category] += trans.amount }
+  def category_sum(transactions)
+    transactions.inject(Hash.new(0)) do |h, (category, transaction)|
+      transaction.each { |trans| h[category] += trans.amount }; h
     end
-    trans_sum
   end
 
   def category_count(transactions)
