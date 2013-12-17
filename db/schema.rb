@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(:version => 20130715191523) do
     t.date     "date"
     t.string   "description"
     t.string   "location"
-    t.decimal  "amount",     :precision => 8, :scale => 2
-    t.boolean  "deposit",    :default => false
+    t.decimal  "amount",      :precision => 8, :scale => 2
+    t.boolean  "deposit",                                   :default => false
     t.integer  "user_id"
     t.integer  "category_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
   end
 
   add_index "transactions", ["category_id"], :name => "category_id_index"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(:version => 20130715191523) do
     t.string   "username"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
 end
