@@ -11,8 +11,6 @@ gem 'kaminari'
 gem 'pg'
 gem 'simple_form'
 gem 'omniauth'
-gem 'omniauth-twitter'
-gem 'omniauth-facebook'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -37,12 +35,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg'
-  gem 'thin'
 end
-
-gem 'roo'
-gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
