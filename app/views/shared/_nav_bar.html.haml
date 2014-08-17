@@ -1,15 +1,16 @@
 .container.header
-  #not_logged_in
-    = link_to "Financial Overview!", root_path
-    %br
+  .col-md-9
+    %h2
+      = link_to "Financial Overview!", root_path
+  .col-md-3
+    %ul
     - if current_user
-      Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
-      %br
-      = link_to 'Import Transactions by CSV', new_user_transaction_path(current_user)
-      %br
-      .logout
-        = link_to 'Logout', logout_path
+      %li
+        Currently logged in as: #{link_to current_user.first_name, user_path(current_user.username)}
+      %li= link_to 'Import Transactions by CSV', new_user_transaction_path(current_user)
+      %li= link_to 'Logout', logout_path
     - else
-      Please login or #{link_to "sign-up!", new_user_path}
-      %br
-      = link_to 'Login with Facebook', '/auth/facebook'
+      %li Login or
+      / %li= link_to 'Login with Facebook', '/auth/facebook'
+      %li{"data-auto-logout-link" => "false", "data-max-rows" => "1", "data-show-faces" => "false", "data-size" => "icon", class: 'fb-login-button'}
+      %li= link_to "Sign Up!", new_user_path

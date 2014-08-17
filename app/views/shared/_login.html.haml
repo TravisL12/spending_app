@@ -1,7 +1,8 @@
 = form_tag login_path do
-  = label_tag "Login"
-  = text_field_tag :username, nil, :placeholder => 'Username'
-  %br
-  = password_field_tag :password, nil, :placeholder => 'Password'
-  %br
-  = submit_tag 'Login'
+  .row
+    = label_tag "Login"
+    = text_field_tag :username, nil, :placeholder => 'Username', class: 'form-control'
+  .row
+    = label_tag "Password"
+    = password_field_tag :password, nil, :placeholder => 'Password', class: 'form-control'
+  .row= submit_tag 'Login', class: 'btn btn-primary'

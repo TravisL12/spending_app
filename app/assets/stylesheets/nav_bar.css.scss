@@ -2,6 +2,7 @@
   font-family: $default-font-family;
   background: #ccc;
   margin-bottom: 20px;
+  padding: 5px 0;
   border-radius: 0 0 10px 10px;
 
   ul, li {
@@ -14,22 +15,9 @@
   a {
     list-style: none;
     text-decoration: none;
-    color: blue;
     text-decoration: none;
     &:hover {
       color: black;
-      font-weight: bold;
     }
-  }
-}
-
-.logout {
-  form {
-    margin-right: 100px;
-    float: right;
-    display: inline;
-  }
-  a {
-    text-decoration: none;
   }
 }

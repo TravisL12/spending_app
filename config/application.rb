@@ -58,5 +58,13 @@ module SpreadsheetUsa
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'env_vars.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    end
+
   end
 end

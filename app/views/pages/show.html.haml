@@ -3,8 +3,7 @@
   .error_alert
     - if flash[:errors_login]
       = render 'shared/login_signup_errors', :errors => flash[:errors_login]
-  .login
-    = render 'shared/login'
+  = render 'shared/login'
   .error_alert
     - if flash[:errors_sign]
       = render 'shared/login_signup_errors', :errors => flash[:errors_sign]
