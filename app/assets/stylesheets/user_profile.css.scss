@@ -1,12 +1,7 @@
-label {
-  display: block;
-}
-
 .container {
   font-family: $default-font-family;
   background: #eee;
   border-radius: 10px;
-  margin: 150px 80px;
   padding: 5px 30px 30px 30px;
 }
 
@@ -15,9 +10,11 @@ label {
   list-style: none;
 }
 
-.profile_choices ul {
-  list-style: none;
-  padding: 0;
+.profile_choices{
+  ul {
+    list-style: none;
+    padding: 0;
+  }
 }
 
 .category_waiting {
