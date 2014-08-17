@@ -9,11 +9,13 @@ module TransactionsHelper
   def category_count(transactions)
 
     transaction_cats = transactions.inject([]) do |cats, transaction|
-      cats << transaction.category unless cats.include?(transaction.category); cats
+      cats << transaction.category unless cats.include?(transaction.category)
+      cats
     end
 
     all_cats = transaction_cats.inject({}) do |h, cats|
-      h[cats] = transactions.where(:id => cats.id); h
+      h[cats] = transactions.where(:category_id => cats.id)
+      p h
     end
 
     all_cats.sort_by { |k,v| k }

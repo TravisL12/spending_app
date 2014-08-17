@@ -25,7 +25,4 @@
             = number_to_currency(trans_total_amount[category], :unit => "$")
         %td
           #col_organize
-            - if transaction.count > 0
-              = number_to_currency(trans_total_amount[category]/transaction.count, :unit => "$")
-            - else
-              = 0
+            = number_to_currency(trans_total_amount[category]/transaction.count, :unit => "$")
