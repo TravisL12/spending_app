@@ -13,7 +13,7 @@ module TransactionsHelper
     end
 
     all_cats = transaction_cats.inject({}) do |h, cats|
-      h[cats] = transactions.find_all_by_category_id(cats.id); h
+      h[cats] = transactions.where(:id => cats.id); h
     end
 
     all_cats.sort_by { |k,v| k }

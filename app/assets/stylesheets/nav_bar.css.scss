@@ -1,14 +1,8 @@
 .header {
   font-family: $default-font-family;
-  height: 100px;
-  width: 100%;
   background: #ccc;
   margin-bottom: 20px;
-
-  #not_logged_in {
-    margin-left: 100px;
-    padding-top: 10px;
-  }
+  border-radius: 0 0 10px 10px;
 
   ul, li {
     list-style: none;
