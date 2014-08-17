@@ -1,0 +1,42 @@
+.header {
+  font-family: $default-font-family;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  background: #ccc;
+  box-shadow: 2px 10px 30px #666;
+  border-bottom: 2px solid #999;
+  #not_logged_in {
+    margin-left: 100px;
+    padding-top: 10px;
+  }
+  ul, li {
+    list-style: none;
+    text-decoration: none;
+    color: blue;
+    text-decoration: none;
+  }
+  a {
+    list-style: none;
+    text-decoration: none;
+    color: blue;
+    text-decoration: none;
+    &:hover {
+      color: black;
+      font-weight: bold;
+    }
+  }
+}
+
+.logout {
+  form {
+    margin-right: 100px;
+    float: right;
+    display: inline;
+  }
+  a {
+    text-decoration: none;
+  }
+}

@@ -8,9 +8,16 @@ gem 'roo'
 gem 'jquery-rails'
 gem 'kaminari'
 
+gem 'sass-rails', '>= 3.2'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+gem 'angularjs-rails'
+
 gem 'pg'
 gem 'simple_form'
 gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
 
 # Gems used only for assets and not required
 # in production environments by default.

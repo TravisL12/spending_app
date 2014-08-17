@@ -1,0 +1,58 @@
+label {
+  display: block;
+}
+
+.container {
+  font-family: $default-font-family;
+  background: #eee;
+  border-radius: 10px;
+  margin: 150px 80px;
+  padding: 5px 30px 30px 30px;
+}
+
+.error_alert, .error {
+  color: red;
+  list-style: none;
+}
+
+.profile_choices ul {
+  list-style: none;
+  padding: 0;
+}
+
+.category_waiting {
+  display: none;
+}
+
+.transactions_all {
+  table tr:first-child {
+    font-weight: bold;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+  }
+  td {
+    padding-right: 20px;
+  }
+}
+
+#col_organize {
+  text-align: right;
+  padding-right: 15px;
+}
+
+#descrip_organize {
+  min-width: 400px;
+}
+
+#col_category_name {
+  width: 300px;
+}
+
+a.category_name {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: black;
+    text-shadow: 0px 0px 2px #faff00;
+  }
+}
